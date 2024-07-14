@@ -1,0 +1,17 @@
+{
+    "widget":
+    {
+        "video_id": "video_id",
+        "buttons": {
+            "button_1": {
+                "name" : "name",
+                "type" : "link",
+                "link" : "url"
+            },
+            "button_2": {
+                "name" : "name",
+                "type" : "video",
+                "video_id" : "video_id"
+            }
+    }
+}
