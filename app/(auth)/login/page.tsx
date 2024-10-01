@@ -46,7 +46,7 @@ export default function Login() {
       await login(formData);
       router.push("/account");
     } catch (error) {
-      setError(error.message);
+      setError("error");
     }
   };
 
