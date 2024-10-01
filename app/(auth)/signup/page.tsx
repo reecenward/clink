@@ -59,7 +59,7 @@ export default function Signup() {
       await signup(formData);
       router.push("/verify"); // Redirect to verify page after sign-up
     } catch (error) {
-      setError("error");
+      setError("error" );
     }
   };
 
