@@ -10,13 +10,13 @@ const App = async () => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data: projectData, error: projectError } = await supabase
+  const { data: widgets, error: widgetsError } = await supabase
     .from("widgets")
     .select("*")
     .eq("owner", `${user?.id}`);
 
-  if (projectError) {
-    console.error("Error uploading video:", projectError.message);
+  if (widgetsError) {
+    console.error("Error uploading video:", widgetsError.message);
     return;
   }
 
@@ -26,13 +26,13 @@ const App = async () => {
       <div className="w-full bg-slate-100">
         <Nav />
         <div className="p-10">
-          {projectData?.length === 0 ? (
-            <h1>No projects available. Please upload some projects.</h1>
+          {widgets?.length === 0 ? (
+            <h1>No widgets available. Please create a widget.</h1>
           ) : (
             <div className="grid grid-cols-5 gap-10 justify-center">
-              {projectData.map((project) => (
-                <div key={project.id}>
-                  <Widget widgetName={project.name} widgetId={project.id} />
+              {widgets.map((widget) => (
+                <div key={widget.id}>
+                  <Widget widgetName={widget.name} widgetId={widget.id} />
                 </div>
               ))}
             </div>

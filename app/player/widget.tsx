@@ -9,7 +9,7 @@ type Props = {
 
 const Widget: React.FC<Props> = ({ widgetName, widgetId }) => {
   return (
-    <a href={`player/${widgetId}`}>
+    <a target='_blank' href={`player/${widgetId}`}>
       <Card className="h-80 w-50 p-4 border-2 border-gray-600 hover:outline outline-4 outline-blue-500/[.33] cursor-pointer hover:border-blue-500">
         <CardTitle>{widgetName}</CardTitle>
       </Card>

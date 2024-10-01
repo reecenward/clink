@@ -16,7 +16,7 @@ import {
            
         <h1 className="text-2xl font-bold p-10">Upgrade your account</h1>
         <div className="flex">
-        <a href="https://buy.stripe.com/test_8wMcNNeCWdtO1iMaEF" className="group/item">
+        <a href="" className="group/item">
               <Card className="p-5 w-80 h-auto  mr-5 border-2 border-gray-600  hover:outline outline-4 outline-blue-500/[.33] cursor-pointer hover:border-blue-500">
               <div className=" flex justify-between items-center">
                 <div className="">
@@ -62,7 +62,7 @@ import {
               </Card>
         
         </a>
-        <a href="https://buy.stripe.com/test_8wMcNNeCWdtO1iMaEF" className="group/item">
+        <a href="" className="group/item">
               <Card className="p-5 w-80 h-auto  mr-5 border-2 border-gray-600  hover:outline outline-4 outline-blue-500/[.33] cursor-pointer hover:border-blue-500">
               <div className=" flex justify-between items-center">
                 <div className="">
@@ -109,7 +109,7 @@ import {
               </Card>
         
         </a>
-        <a href="https://buy.stripe.com/test_8wMcNNeCWdtO1iMaEF" className="group/item">
+        <a href="" className="group/item">
               <Card className="p-5 w-80  h-auto   border-2 border-gray-600  hover:outline outline-4 outline-blue-500/[.33] cursor-pointer hover:border-blue-500">
               <div className=" flex justify-between items-center">
                 <div className="">

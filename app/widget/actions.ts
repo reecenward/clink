@@ -8,7 +8,6 @@ export async function createWidget(formData: FormData) {
     data: { user },
   } = await supabase.auth.getUser();
 
-
   const data = {
     name: formData.get('name') as string, 
   }

@@ -83,7 +83,6 @@ export default function Nav() {
                   );
                 }}
               />
-
               <DialogFooter>
                 <Button type="submit">Create Project</Button>
               </DialogFooter>

@@ -34,9 +34,9 @@ export default function Menu() {
           <Card className="w-80 h-auto  mr-5 border-2 border-gray-600  hover:outline outline-4 outline-blue-500/[.33] cursor-pointer hover:border-blue-500">
             <div className="p-5 flex justify-between items-center">
               <div className="">
-                <CardTitle className="mb-1">Stories</CardTitle>
+                <CardTitle className="mb-1">Library</CardTitle>
                 <CardDescription className="mb-2">
-                  Lets make a story together
+                  Upload and manage your videos
                 </CardDescription>
               </div>
               <div>
@@ -56,9 +56,9 @@ export default function Menu() {
           <Card className="w-80  h-auto   border-2 border-gray-600  hover:outline outline-4 outline-blue-500/[.33] cursor-pointer hover:border-blue-500">
             <div className="p-5 flex justify-between items-center">
               <div className="">
-                <CardTitle className="mb-1">More</CardTitle>
+                <CardTitle className="mb-1">Account</CardTitle>
                 <CardDescription className="mb-2">
-                  Learn how to do more things
+                Edit or uprage your account
                 </CardDescription>
               </div>
               <div>
