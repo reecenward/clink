@@ -7,10 +7,18 @@ interface User {
     avatar: string;
 }
 
+// Define the Zustand store state interface
+interface SelectedWidgetStore {
+    user: User | null;
+    setSelectedWidget: (user: User) => void;
+    updateSelectedWidge: (updatedFields: Partial<User>) => void;
+    clearSelectedWidge: () => void;
+}
+
 // Create the store using Zustand
-const useSelectedWidge = create((set) => ({
+const useSelectedWidge = create<SelectedWidgetStore>((set) => ({
     // The initial state for the single user
-    user: null as User | null,
+    user: null,
 
     // Function to set or update the user
     setSelectedWidget: (user: User) => set({ user }),
