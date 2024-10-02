@@ -42,7 +42,12 @@ export default function EditName(partID:any) {
     try {
       await updateName(formData);
     } catch (error) {
-      setError(error.message);
+      // Type assertion here to treat error as Error
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unexpected error occurred");
+      }
     }
   };
 

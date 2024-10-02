@@ -5,11 +5,16 @@ import { Button } from "@/components/ui/button";
 import { PlayIcon, PauseIcon, SpeakerLoudIcon, SpeakerOffIcon } from "@radix-ui/react-icons";
 import { Progress } from "@/components/ui/progress";
 
-const VideoPlayer = ({ video, publicUrl }) => {
+type VideoPlayerProps = {
+  video?: { id: string; name: string };  // Replace with the actual shape of your video object
+  publicUrl: string;
+};
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ video, publicUrl }) => {
+
   const [isPaused, setIsPaused] = useState(true);
   const [currentVideoTime, setCurrentVideoTime] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
-  const videoRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     if (videoRef.current) {

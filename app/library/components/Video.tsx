@@ -33,12 +33,26 @@ import {
 import VideoPlayer from "@/app/components/VideoPlayer";
 import { v4 as uuidv4 } from "uuid";
 import { deleteVideo, renameVideo } from "../actions";
+ 
+interface Video {
+  id: string;
+  name: string;
+  publicUrl: {
+    publicUrl: string;
+  };
+}
 
-export default function VideoSettings({ videos }) {
+interface VideoSettingsProps {
+  videos: Video[];
+}
+
+
+export default function VideoSettings( { videos }: VideoSettingsProps) {
   const [videoName, setVideoName] = useState("");
   const [selectedVideo, setSelectedVideo] = useState("");
   const [videoNewName, setVideoNewName] = useState("");
-  const [videoFile, setVideoFile] = useState(null);
+  const [videoFile, setVideoFile] = useState<File | null>(null);
+
   const [videoToRename, setVideoToRename] = useState({ id: "", name: "" });
 
   const handleVideoUpload = async () => {
@@ -53,7 +67,7 @@ export default function VideoSettings({ videos }) {
     // Upload the video to the user's bucket with UUID as the name
     const { data: storageData, error: storageError } = await supabase.storage
       .from("videos")
-      .upload(`${user.user.id}/${videoUUID}.mp4`, videoFile);
+      .upload(`${user.user?.id}/${videoUUID}.mp4`, videoFile);
 
     if (storageError) {
       console.error("Error uploading video:", storageError.message);
@@ -63,7 +77,7 @@ export default function VideoSettings({ videos }) {
     // Save video details to the 'videos' table
     const { data: insertData, error: insertError } = await supabase
       .from("videos")
-      .insert([{ id: videoUUID, name: videoName, owner: user.user.id }]);
+      .insert([{ id: videoUUID, name: videoName, owner: user.user?.id }]);
 
     if (insertError) {
       console.error("Error saving video details:", insertError.message);
@@ -74,10 +88,11 @@ export default function VideoSettings({ videos }) {
     setVideoName("");
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null; // If file is undefined, set it to null
     setVideoFile(file);
   };
+  
 
   return (
     <div className="w-full bg-slate-100 ">
@@ -136,13 +151,14 @@ export default function VideoSettings({ videos }) {
                   <DropdownMenuSeparator />
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Button
-                        onClick={() =>
-                            setVideoToRename(video.id, video.name)
-                        }
-                      >
-                        Rename
-                      </Button>
+                    <Button
+  onClick={() =>
+    setVideoToRename({ id: video.id, name: video.name })
+  }
+>
+  Rename
+</Button>
+
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px]">
                       <div className="grid gap-4 py-4">

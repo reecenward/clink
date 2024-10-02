@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@radix-ui/react-icons";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -15,11 +15,22 @@ import { handleChangeVideo } from "../../actions";
 import { supabase } from "../../../../../lib/supabase";
 
 
+
+interface Video {
+  id: string;
+  name: string;
+  publicUrl: { publicUrl: string };
+}
+
+
 type Props = {}
 export default function ChangeVideo({}: Props) {
-  const [userVideos, setUserVideos] = useState([]);
+  const [userVideos, setUserVideos] = useState<Video[]>([]);
   const [selectedChangeVid, setSelectedChangeVid] = useState(null);
   const [videoFile, setVideoFile] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
+
+
   
 
   const fetchUserDataAndVideos = async () => {
@@ -29,7 +40,7 @@ export default function ChangeVideo({}: Props) {
       const { data: videos, error } = await supabase
         .from("videos")
         .select("*")
-        .eq("owner", `${user.user.id}`);
+        .eq("owner", `${user.user?.id}`);
   
       if (error) {
         console.error("Error fetching user videos:", error.message);
@@ -41,7 +52,7 @@ export default function ChangeVideo({}: Props) {
         videos.map(async (video) => {
           const { data: publicUrlData } = await supabase.storage
             .from("videos")
-            .getPublicUrl(`/${user.user.id}/${video.id}.mp4`);
+            .getPublicUrl(`/${user.user?.id}/${video.id}.mp4`);
           return { ...video, publicUrl: publicUrlData };
         })
       );
@@ -50,28 +61,38 @@ export default function ChangeVideo({}: Props) {
   
       setUserVideos(videosWithUrls);
     } catch (error) {
-      console.error("Error fetching user data:", error.message);
-    }
-  };
-  
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setVideoFile(file);
-  };
-  
-  
-  const handleChangeVideoc = async () => {
-    try {
-      const response = await handleChangeVideo(selectedChangeVid.id, selectedProject.id);
-  
-      if (response.success) {
-        setSelectedChangeVid(null);
-        router.refresh(); // Refresh the page or fetch updated data
+      if (error instanceof Error) {
+        console.error("Error fetching user data:", error.message);
+      } else {
+        console.error("Unknown error:", error);
       }
-    } catch (error) {
-      console.error("Failed to change video:", error.message);
     }
   };
+  
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files ? e.target.files[0] : null;
+  //   setVideoFile(file);
+  // };
+  
+  
+  // const handleChangeVideoc = async () => {
+  //   try {
+  //     if (selectedChangeVid && selectedProject) {
+  //       const response = await handleChangeVideo(selectedChangeVid.id, selectedProject.id);
+     
+  //     if (response.success) {
+  //       setSelectedChangeVid(null);
+  //       // router.refresh(); // Refresh the page or fetch updated data
+  //     }
+  //   }
+  // } catch (error) {
+  //   if (error instanceof Error) {
+  //     console.error("Failed to change video:", error.message);
+  //   } else {
+  //     console.error("Unknown error:", error);
+  //   }
+  //   }
+  // };
 
 
   return (
@@ -90,30 +111,28 @@ export default function ChangeVideo({}: Props) {
       <DialogHeader>
         <DialogTitle> Choose from video library</DialogTitle>
       </DialogHeader>
-      <pre className="p-5">
-        {JSON.stringify(selectedChangeVid?.id, null, 2)}
-      </pre>
+      
       <div className="grid gap-4 py-4">
         <div className="grid grid-cols-3 gap-10 justify-center">
-          {userVideos?.map((video, index) => (
-            <div
-              onClick={() => setSelectedChangeVid(video)}
-              className="rounded border-2 border-gray-600 hover:outline outline-4 outline-blue-500/[.33] cursor-pointer hover:border-blue-500"
-              key={index}
-            >
-              <VideoPlayer
-                video={video}
-                publicUrl={video.publicUrl.publicUrl}
-              />
-              <h1>{video.name}</h1>
-            </div>
-          ))}
+        {userVideos?.map((video: Video, index) => (
+  <div
+    // onClick={() => setSelectedChangeVid(video)}
+    className="rounded border-2 border-gray-600 hover:outline outline-4 outline-blue-500/[.33] cursor-pointer hover:border-blue-500"
+    key={index}
+  >
+    <VideoPlayer
+      video={video}
+      publicUrl={video.publicUrl.publicUrl}
+    />
+    <h1>{video.name}</h1>
+  </div>
+))}
         </div>
       </div>
       <DialogFooter>
-        <Button onClick={handleChangeVideoc} type="submit">
+        {/* <Button onClick={handleChangeVideoc} type="submit">
           Select video
-        </Button>
+        </Button> */}
       </DialogFooter>
     </DialogContent>
   </Dialog>

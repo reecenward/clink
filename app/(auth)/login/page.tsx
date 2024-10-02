@@ -46,7 +46,12 @@ export default function Login() {
       await login(formData);
       router.push("/account");
     } catch (error) {
-      setError("error");
+      // Type assertion here to treat error as Error
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unexpected error occurred");
+      }
     }
   };
 

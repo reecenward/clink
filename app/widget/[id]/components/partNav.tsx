@@ -50,7 +50,12 @@ export default function PartNav({}: Props) {
     try {
       await createPart(formData);
     } catch (error) {
-      setError(error.message);
+      // Type assertion here to treat error as Error
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unexpected error occurred");
+      }
     }
   };
 

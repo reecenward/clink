@@ -47,17 +47,22 @@ export default function CreateLink(links:any, projects:any, types:any) {
     },
   });
 
-  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    const formData = new FormData();
-    formData.append("name", values.name);
-    formData.append("part", part.id);
+  // const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+  //   const formData = new FormData();
+  //   formData.append("name", values.name);
+  //   formData.append("part", part.id);
 
-    try {
-      await createPart(formData);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
+  //   try {
+  //     await createPart(formData);
+  //   } catch (error) {
+  //     // Type assertion here to treat error as Error
+  //     if (error instanceof Error) {
+  //       setError(error.message);
+  //     } else {
+  //       setError("An unexpected error occurred");
+  //     }
+  //   }
+  // };
 
   return (
     <div>
@@ -102,13 +107,13 @@ export default function CreateLink(links:any, projects:any, types:any) {
                      <SelectValue placeholder="None" />
                    </SelectTrigger>
                    <SelectContent>
-                   {types (
+                   {/* {types (
                      {types.map((type, index) => (
                        <SelectItem key={index} value={type.id}>
                          {type.name}
                        </SelectItem>
                      ))}
-                    ) : ""}
+                    ) : ""} */}
                    </SelectContent>
                  </Select>
                </div>
@@ -123,13 +128,13 @@ export default function CreateLink(links:any, projects:any, types:any) {
                      <SelectValue placeholder="None" />
                    </SelectTrigger>
                    <SelectContent>
-                     {projects.projects
+                     {/* {projects.projects
                        ?.filter((part) => part.id !== selectedProject?.id)
                        .map((part, index) => (
                          <SelectItem key={index} value={part.id}>
                            {part.name}
                          </SelectItem>
-                       ))}
+                       ))} */}
                    </SelectContent>
                  </Select>
                </div>
@@ -141,11 +146,11 @@ export default function CreateLink(links:any, projects:any, types:any) {
          </Dialog>
 
          <h1>links:</h1>
-              {links.links.map((part, index) => (
+              {/* {links.links.map((part, index) => (
                 <div key={index} value={part.id}>
                   {part.name}-{part.part_link}-{part.external_link}-{part.cta}
                 </div>
-              ))}
+              ))} */}
     </div>
   );
 }

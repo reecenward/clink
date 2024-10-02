@@ -28,17 +28,37 @@ import CreateLink from "./editor/CreateLink";
 import { link } from "fs";
 import { handleDelete } from "../actions";
 
+type TypeItem = {
+  id: string; // or number depending on your schema
+  name: string;
+  // Add any other properties your types have
+};
+
+type LinkItem = {
+  id: string; // or number depending on your schema
+  cta: string;
+  external_link?: string; // Optional if it may not be present
+  part_link?: string; // Optional if it may not be present
+};
+
+interface Project {
+  id: string; // or number, based on your actual data type
+  name: string; // Add other properties based on your project structure
+  publicUrl: string; // Include any other properties you are accessing
+  caption?: string;
+}
+
 
 type Props = {
   combinedData: any;
 };
 
 const Part: React.FC<Props> = ({ combinedData }) => {
-  const [projects, setProjects] = useState([]);
-  const [types, setTypes] = useState([]);
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [selectedVid, setSelectedVid] = useState(null);
-  const [links, setLinks] = useState([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [types, setTypes] = useState<TypeItem[]>([]);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null); 
+  const [links, setLinks] = useState<LinkItem[]>([]);
+  const [selectedVid, setSelectedVid] = useState<Project | null>(null);
   const router = useRouter()
 
   useEffect(() => {
@@ -76,18 +96,23 @@ const Part: React.FC<Props> = ({ combinedData }) => {
   const handleSave = async () => {};
 
   const handleDeleteClick = async () => {
+    if (!selectedProject) {
+      console.error("No project selected.");
+      return; // Exit if selectedProject is null
+    }
+  
     try {
       const formData = new FormData();
-      formData.append("projectId", selectedProject.id);
-
+      formData.append("projectId", selectedProject.id); // Safe to access id now
+  
       const response = await handleDelete(formData);
-
+  
       if (response.success) {
         setSelectedProject(null);
         router.refresh(); // Refresh the page or fetch updated data
       }
     } catch (error) {
-      console.error("Failed to delete the part:", error.message);
+      console.error("Failed to delete the part:", error instanceof Error ? error.message : "Unknown error");
     }
   };
 
@@ -156,7 +181,7 @@ const Part: React.FC<Props> = ({ combinedData }) => {
                   <div className="relative w-64">
                     <VideoPlayer
                       video={selectedVid}
-                      publicUrl={selectedVid.publicUrl}
+                      publicUrl={selectedVid.publicUrl} 
                     />
                     <div className="absolute bottom-0 h-3/6 w-full flex flex-col items-center justify-center">
                       <h1 className="text-white">{selectedProject.caption}</h1>
@@ -175,12 +200,18 @@ const Part: React.FC<Props> = ({ combinedData }) => {
                             </Button>
                           ) : (
                             <Button
-                              key={index}
-                              className="m-1"
-                              onClick={() => setSelectedProject(link.part_link)}
-                            >
-                              {link.cta}
-                            </Button>
+  key={index}
+  className="m-1"
+  onClick={() => {
+    if (link.part_link) { // Check if part_link is defined
+      const projectToSelect = projects.find(p => p.id === link.part_link); // Find the project by ID
+      setSelectedProject(projectToSelect || null); // Set it or null if not found
+    }
+  }}
+>
+  {link.cta}
+</Button>
+
                           )
                         )}
                       </div>

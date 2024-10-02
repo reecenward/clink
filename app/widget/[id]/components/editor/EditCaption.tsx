@@ -44,7 +44,12 @@ export default function EditCaption(partID:any) {
     try {
       await updateCaption(formData);
     } catch (error) {
-      setError(error.message);
+      // Type assertion here to treat error as Error
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unexpected error occurred");
+      }
     }
   };
 
