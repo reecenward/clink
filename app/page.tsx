@@ -7,7 +7,7 @@ export default function page() {
   <iframe
     style={{ height: "100%", width: "100%", border: "none" }}
     allowFullScreen
-    src="http://localhost:3000/player/7bab0e95-ae32-418b-a948-ee9eeb94bb87"
+    src="https://clink-dinnerparty-app.vercel.app/player/7bab0e95-ae32-418b-a948-ee9eeb94bb87"
   ></iframe>
 </div>
 

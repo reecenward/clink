@@ -63,7 +63,7 @@ export default function PartNav({}: Props) {
   const handleCopy = () => {
     const codeSnippet = `<div style={{ height: "576px", width:"320px",  position:"fixed", right:0, bottom:0, margin:"10px"}}>
   
-  <iframe style={{ height: "100%", width: "100%", border: "none" }} allowfullscreen src="http://localhost:3000/player/${widgetId.id}" ></iframe>
+  <iframe style={{ height: "100%", width: "100%", border: "none" }} allowfullscreen src="https://clink-dinnerparty-app.vercel.app/player/${widgetId.id}" ></iframe>
 </div>`;
 
     navigator.clipboard.writeText(codeSnippet).then(() => {
