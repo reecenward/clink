@@ -53,45 +53,48 @@ export async function createPart(formData: FormData) {
   };
 
 
-export async function handleCreateLink(formData: FormData) {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+// export async function handleCreateLink(formData: FormData) {
 
-  if (type == "1"){
-    const { data: partData, error: paraError } = await supabase
-      .from("links")
-      .insert({
-        part: `${selectedPartID}`,
-        owner: `${user?.id}`,
-        part_link: `${linkToPart}`,
-        name: `${linkName}`,
-        cta: `${CTA}`,
-        type: `${linkType}`,
-      });
+//   const selectedPartID = formData.get("selectedPartID");
 
-    if (paraError) {
-      console.error("Error uploading video:", paraError.message);
-      return;
-    }
+//   const {
+//     data: { user },
+//   } = await supabase.auth.getUser();
 
-  }else{
-    const { data: partData, error: paraError } = await supabase
-    .from("links")
-    .insert({
-      part: `${selectedPartID}`,
-      owner: `${user?.id}`,
-      name: `${linkName}`,
-      cta: `${CTA}`,
-      type: `${linkType}`,
-    });
+//   if (type == "1"){
+//     const { data: partData, error: paraError } = await supabase
+//       .from("links")
+//       .insert({
+//         part: `${selectedPartID}`,
+//         owner: `${user?.id}`,
+//         part_link: `${linkToPart}`,
+//         name: `${linkName}`,
+//         cta: `${CTA}`,
+//         type: `${linkType}`,
+//       });
 
-  if (paraError) {
-    console.error("Error uploading video:", paraError.message);
-    return;
-  }
-  }
-  };
+//     if (paraError) {
+//       console.error("Error uploading video:", paraError.message);
+//       return;
+//     }
+
+//   }else{
+//     const { data: partData, error: paraError } = await supabase
+//     .from("links")
+//     .insert({
+//       part: `${selectedPartID}`,
+//       owner: `${user?.id}`,
+//       name: `${linkName}`,
+//       cta: `${CTA}`,
+//       type: `${linkType}`,
+//     });
+
+//   if (paraError) {
+//     console.error("Error uploading video:", paraError.message);
+//     return;
+//   }
+//   }
+//   };
 
 
   export async function updateName (formData: FormData)  {
